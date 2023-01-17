@@ -1,0 +1,65 @@
+
+/* PNOTIFY CUSTOM CSS START */
+
+[ui-pnotify] .pnotify-material .ui-pnotify-title {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    line-height: 20px !important;
+    font-weight: bold;
+    color: #fff !important;
+}
+[ui-pnotify] .pnotify-material .ui-pnotify-text {
+    font-size: 12px !important;
+    line-height: 18px !important;
+    margin-left: 0 !important;
+    color: #fff !important;
+}
+[ui-pnotify] .pnotify-material.pnotify-material-notice .ui-pnotify-text,
+[ui-pnotify] .pnotify-material.pnotify-material-notice .ui-pnotify-title {
+    color: #495057 !important;
+}
+.ui-pnotify-closer.svelte-1yjle82,
+.ui-pnotify-sticker.svelte-1yjle82 {
+    outline: none;
+}
+.ui-pnotify-action-button {
+    cursor: pointer;
+}
+[ui-pnotify].pnotify-custom .pnotify-material.ui-pnotify-container {
+    width: 500px !important;
+}
+[ui-pnotify].pnotify-custom .ui-pnotify-container.pnotify-material {
+	background-color: #222529;
+	border-radius: 4px;
+}
+[ui-pnotify].pnotify-custom.success .pnotify-material-success .ui-pnotify-icon  {
+	color: #66BB6A !important;
+}
+[ui-pnotify].pnotify-custom.error .pnotify-material-error .ui-pnotify-icon  {
+	color: #EF5350 !important;
+}
+[ui-pnotify].pnotify-custom.warning .ui-pnotify-icon  {
+	color: #ffc107 !important;
+}
+[ui-pnotify].pnotify-custom.warning .material-icons.pnotify-material-icon-closer,
+[ui-pnotify].pnotify-custom.info .material-icons.pnotify-material-icon-closer {
+	color: #fff;
+}
+[ui-pnotify].pnotify-custom.info .ui-pnotify-icon  {
+	color: #17a2b8 !important;
+}
+.pnotify-custom .ui-pnotify-ul {
+	list-style: disc;
+	padding-left: 48px;
+	margin-bottom: 0px;
+}
+[ui-pnotify].pnotify-custom .ui-pnotify-icon {
+    margin-top: -3px;
+}
+@media (max-width: 499px) {
+	[ui-pnotify].pnotify-custom {
+		top: 0 !important;
+	}
+}
+
+/* PNOTIFY CUSTOM CSS END */
