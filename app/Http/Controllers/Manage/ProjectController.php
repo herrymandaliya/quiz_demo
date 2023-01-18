@@ -13,8 +13,6 @@ use App\Models\Projectmessage;
 use App\Models\Projectmedia;
 use Auth;
 
-
-
 class ProjectController extends AdminbaseController
 {
     public function index() {

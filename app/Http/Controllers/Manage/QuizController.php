@@ -100,4 +100,46 @@ class QuizController extends AdminbaseController
         return redirect('/manage/quiz');
     }
 
+    public function edit($id){
+
+        $data['q'] = Quiz::with('question')
+                        ->where('quizze_id', $id)
+                        ->first();
+                        // dd($q);
+        return view_admin('quiz.view',$data);
+    }
+
+    public function update(Request $request, $id){
+       
+        $question = Questionnaire::find($id);
+       
+        $question->questionnaire_name = $request->input('q_name');
+        $question->questionnaire_type = $request->input('q_type');
+        $question->choices1 = $request->input('choices1');
+        $question->choices2 = $request->input('choices2');
+        $question->choices3 = $request->input('choices3');
+        $question->choices4 = $request->input('choices4');
+        $question->answer = $request->input('q_ans');
+        $question->save();
+    }
+
+    public function addQuestion(Request $request){
+        $question = new Questionnaire;
+        $question->quizze_id = $request->input('q_id');
+        $question->questionnaire_name = $request->input('q_name');
+        $question->questionnaire_type = $request->input('q_type');
+        $question->choices1 = $request->input('choices1');
+        $question->choices2 = $request->input('choices2');
+        $question->choices3 = $request->input('choices3');
+        $question->choices4 = $request->input('choices4');
+        $question->answer = $request->input('q_ans');
+        $question->save();
+    }
+
+    public function deleteQuestion(Request $request){
+        Questionnaire::destroy($id);
+    }
+
+    
+
 }

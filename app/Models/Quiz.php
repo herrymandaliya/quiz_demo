@@ -14,4 +14,8 @@ class Quiz extends Model
     protected $table        = 'quizzes';
 
     protected $primaryKey   = 'quizze_id';
+
+    public function question(){
+        return $this->hasMany('App\Models\Questionnaire', 'quizze_id', 'quizze_id');
+    }
 }

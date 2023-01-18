@@ -13,10 +13,10 @@ function submitHandler(form) {
 	loadData(page, searchVal);
 }
 
-function loadData(page, search) {
-    showLoader();
-    ajaxFetch(baseurl() + '/projects/load', { page: page, search: search }, formResponse);
-}
+// function loadData(page, search) {
+//     showLoader();
+//     ajaxFetch(baseurl() + '/projects/load', { page: page, search: search }, formResponse);
+// }
 
 function formResponse(responseText, statusText) {
 	var form = $('#searchform');

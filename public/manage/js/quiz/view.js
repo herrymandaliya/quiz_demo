@@ -1,272 +1,166 @@
-var fileindex = 0;
-var totfileCount = 0;
-var messageid = 0;
-var sendingFile = false;
-var totalLastMessageLen = 0;
-$(document).ready(function() {
-
-	$('#formprojectmessage').validate({
-		rules: {
-			message: {
-				required: true
-			}
-		},
-		messages: {
-			message: {
-				required: 'Please enter message.'
-			}
-		},
-		submitHandler: submitHandlerprojectmessage
-	});
-
-
-	$('.send-msg-btn').click(function(e){
-		e.preventDefault();
-
-		if($('#messageFiles').get(0).files.length > 0) {
-			// uploadfiles($('#messageFiles').get(0).files);
-			sendMessage();
-		}
-		else {
-			$('#formprojectmessage').submit();
-		}
-	});
-
-
-	var project_id = $("#formprojectmessage #project_id").val();
-	if(project_id != "" && project_id != "undefined") {
-
-		loadMessages(project_id);
+$.ajaxSetup({
+	headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	}
-
-	setInterval(function(){
-		if(!sendingFile){
-		  	if(project_id != "" && project_id != "undefined") {
-				loadMessages(project_id);
-			}
-		}
-	}, 5000);
-
-	setTimeout(function(){
-		$(".chat-wrap-inner").animate({
-				  scrollTop: $('.chat-wrap-inner')[0].scrollHeight - $('.chat-wrap-inner')[0].clientHeight
-				}, 50);
-	},2000);
-
 });
 
-function getMyMessages() {
-	if(!sendingFile){
-	  	if(project_id != "" && project_id != "undefined") {
-			loadMessages(project_id);
-		}
+$("#opt").change(function () {
+	$("#f-multiple-choice").css("display", "none"); //Multiple Choice
+	$("#cf-mc").css("display", "none"); //correct choice
+	$("#cf-tf").css("display", "none"); //True or False
+	$("#cf-identify").css("display", "none"); //Identification
+
+	if ($("#opt").val() == 1) { //Identification
+			// console.log("Identify");
+			$("#cf-identify").css("display", "inline"); //Identification
+	} else if ($("#opt").val() == 2) { //Multiple choice
+			// console.log("Multiple Choice");
+			$("#f-multiple-choice").css("display", "inline"); //Multiple Choice
+			$("#cf-mc").css("display", "inline"); //correct choice
+	} else if ($("#opt").val() == 3) { //True or false
+			// console.log("True or False");
+			$("#cf-tf").css("display", "inline"); //True or False
 	}
-}
+});
 
-function sendMessage() {
-	sendingFile = true;
-	var data = { 
-		project_id: $('#project_id').val(),
-		message: $('#message').val(),
-		media: true,
-	};
-	ajaxUpdate(baseurl() + '/projects/sendmessage', data, function(responseText, statusText) {
+$("#a_opt").change(function () {
+	$("#a_f-multiple-choice").css("display", "none"); //Multiple Choice
+	$("#a_cf-mc").css("display", "none"); //correct choice
+	$("#a_cf-tf").css("display", "none"); //True or False
+	$("#a_cf-identify").css("display", "none"); //Identification
 
-		if(statusText == 'success') {
-			if(responseText.type == 'success') {
-				messageid = responseText.projectmessage_id;
-				getMessage();
-		    }
-		    else {
-		        showError(responseText.caption);
-		    }
-		}
-		else {
-			showError('Unable to communicate with server.');
-		}
-	}, true);
-}
-
-/* load document messages */
-function getMessage(){
-	// showLoader();
-	ajaxFetch(baseurl() + '/projects/getmessage', { projectmessage_id:messageid }, function(responseText, statusText) {
-		// hideLoader();
-		if(statusText == 'success') {
-			$('#loadmessages').append(responseText);
-			setFile();
-		}
-		else {
-			showError('Unable to communicate with server.');
-		}
-
-	},true);
-}
-
-function sendFile() {
-
-
-	if($('#messageFiles').get(0).files.length > fileindex) {
-		uploadfiles($('#messageFiles').get(0).files);
+	if ($("#a_opt").val() == 1) { //Identification
+			// console.log("Identify");
+			$("#a_cf-identify").css("display", "inline"); //Identification
+	} else if ($("#a_opt").val() == 2) { //Multiple choice
+			// console.log("Multiple Choice");
+			$("#a_f-multiple-choice").css("display", "inline"); //Multiple Choice
+			$("#a_cf-mc").css("display", "inline"); //correct choice
+	} else if ($("#a_opt").val() == 3) { //True or false
+			// console.log("True or False");
+			$("#a_cf-tf").css("display", "inline"); //True or False
 	}
-	else {
-		$('#messageFiles').val('');
-		sendingFile = false;
-		$('input[name="message"]').val('');
-	}
-}
+});
 
-function setFile() {
-	var html = '';
-	$.each($('#messageFiles').get(0).files, function(index, file) {
-		html += '<div class="file-box file-box'+index+'">'+
-                    '<span class="file-name text-ellipsis">'+file.name+'</span>'+
-                    '<div class="d-flex justify-content-between">'+
-                        '<div class="file-size">Size: '+formatBytes(file.size)+'</div>'+
-                        '<div class="file-download">'+
-                            '<a href="#" class="fa fa-download"></a></div>'+
-                    '</div>'+
-                    '<div class="file-progress d-block"></div>'+
-                    '<div class="file-progress-status d-block"><span>0%</span></div>'+
-                '</div>'
+$('#editQuestion').on('show.bs.modal', function (event) {
+	console.log(event.qid);
+	var button = $(event.relatedTarget); // Button that triggered the modal
+	var qid = button.data('qid');
+	var question = button.data('question');
+	var qtype = button.data('question-type');
+	var choices1 = button.data('choices1');
+	var choices2 = button.data('choices2');
+	var choices3 = button.data('choices3');
+	var choices4 = button.data('choices4');
+	var ans = button.data('correct-ans');
+	var modal = $(this)
+	modal.find('#question').val(question)
+	modal.find('#opt').val(qtype)
+	modal.find('#_qid').val(qid);
+	$("#opt").trigger("change")
+
+	if ($("#opt").val() == 2) { //Multiple Choice
+			console.log("MC")
+			// var ch = choices.split(";");
+			$("#mc0").val(choices1)
+			$("#mc1").val(choices2)
+			$("#mc2").val(choices3)
+			$("#mc3").val(choices4)
+			modal.find("#c-mc").val(ans)
+	} else if ($("#opt").val() == 3) { //True or False
+			
+			modal.find("#c-tf").val(ans)
+	}
+});
+
+$('#deleteQuestion').on('show.bs.modal', function (event) {
+	var button = $(event.relatedTarget) // Button that triggered the modal
+	var qid = button.data('qid')
+
+	var modal = $(this)
+	modal.find('#q_id').val(qid)
+});
+
+function UpdateQuestion() {
+	var q_name = $('#question').val();
+	var q_type = $('#opt').val();
+	var q_id = $('#_qid').val();
+	var q_ans = "";
+
+	var choices1 = "";
+	var choices2 = "";
+	var choices3 = "";
+	var choices4 = "";
+	if(q_type == 1){
+			q_ans = $('#c-identify').val();
+	}
+	else if(q_type == 2){
+			q_ans = $('#c-mc').val();
+			choices1 = $('#mc0').val();
+			choices2 = $('#mc1').val();
+			choices3 = $('#mc2').val();
+			choices4 = $('#mc3').val();
+	}
+	else if(q_type = 3){
+			q_ans = $('#c-tf').val();
+	}
+
+	$.ajax({
+			url: '/manage/question/edit/' + q_id,
+			type: 'PUT', //type is any HTTP method
+			data: {
+					q_name, q_type, choices1,choices2,choices3,choices4, q_ans
+			}, //Data as js object
+			success: function () {
+					window.location.reload(true);
+			}
 	});
-
-	$('#chat'+messageid+' .upload-wrapper').html(html);
-	$(".chat-wrap-inner").animate({
-				  scrollTop: $('.chat-wrap-inner')[0].scrollHeight - $('.chat-wrap-inner')[0].clientHeight
-				}, 50);
-	sendFile();
-	
 }
 
-function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return '0 Bytes';
+function AddQuestion() {
+	var q_name = $('#a_question').val();
+	var q_type = $('#a_opt').val();
+	var q_id = $('#a_qid').val();
+	var q_ans = "";
 
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-
-function uploadfiles(files_list) {
-	
-	var file = files_list[fileindex];
-	
-	var formData = new FormData();
-    formData.append('file', file);
-    formData.append('projectmessage_id', messageid);
-
-    $.ajax({
-        url:baseurl() + "/projects/send-media-message",
-        method:"POST",
-        data:formData,
-        contentType:false,
-        cache: true,
-        processData: false,
-        xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = (evt.loaded / evt.total) * 100;
-                    //Do something with upload progress here
-                    var percentVal = parseInt(percentComplete);
-                    // OnProgress(percentVal, index);
-                    $('#chat'+messageid+' .file-box'+fileindex+' .file-progress').css("width", percentVal+"%");
-                    $('#chat'+messageid+' .file-box'+fileindex+' .file-progress-status span').text(percentVal+"%");
-
-                }
-           }, false);
-           return xhr;
-        },
-        beforeSend: function(){
-             // beforeSend(index);
-        },
-        afterSend: function(){
-             // beforeSend(index);
-        },
-        success:function(data){
-            if(data.type == 'success') {
-            	$('#chat'+messageid+' .file-box'+fileindex+' .file-progress').css("width", "0%");
-            	$('#chat'+messageid+' .file-box'+fileindex+' .file-progress').removeClass("d-block");
-            	$('#chat'+messageid+' .file-box'+fileindex+' .file-progress-status span').text("0%");
-            	$('#chat'+messageid+' .file-box'+fileindex+' .file-progress-status').removeClass("d-block");
-            	fileindex++;
-            	sendFile();
-                // progressComplete(index, data);
-            }
-            else {
-                showError(data.caption, data.errormessage);
-            }
-            
-        },
-        error:function(){
-            // failedFile[index] = file;
-            // setFailedImage(index);
-        },
-        complete: function() {
-            // setQueueAjax(index);
-        }
-    });
-}
-
-
-/* load document messages */
-function loadMessages(project_id){
-	// showLoader();
-	ajaxFetch(baseurl() + '/projects/getmessages', { project_id:project_id }, function(responseText, statusText) {
-		// hideLoader();
-		if(statusText == 'success') {
-			if($(responseText).length != totalLastMessageLen) {
-				$('#loadmessages').html(responseText);
-			}
-			totalLastMessageLen = $(responseText).length;
-		}
-		else {
-			showError('Unable to communicate with server.');
-		}
-
-	},true);
-}
-function submitHandlerprojectmessage(form) {
-	// showLoader();
-	$('input[name="message"]').attr('readonly', true);
-	disableFormButton(form);
-	$(form).ajaxSubmit({
-		dataType: 'json',
-        success: formResponseprojectmessage,
-        error: formResponseError
-    });
-}
-
-
-function formResponseprojectmessage(responseText, statusText) {
-    var form = $('#formprojectmessage');
-    $('input[name="message"]').attr('readonly', false);
-    enableFormButton(form);
-	if(statusText == 'success') {
-		if(responseText.type == 'success') {
-			var project_id = $("#formprojectmessage #project_id").val();
-			loadMessages(project_id);
-			$("#formprojectmessage").trigger('reset');
-
-			setTimeout(function(){
-				$(".chat-wrap-inner").animate({
-						  scrollTop: $('.chat-wrap-inner')[0].scrollHeight - $('.chat-wrap-inner')[0].clientHeight
-						}, 50);
-			},2000);
-		}
-		else {
-			showError(responseText.caption, responseText.errormessage);
-			if(responseText.errorfields !== undefined) {
-				highlightInvalidFields(form, responseText.errorfields);
-			}
-		}
+	var choices1 = "";
+	var choices2 = "";
+	var choices3 = "";
+	var choices4 = "";
+	if(q_type == 2){
+			q_ans = $('#a_c-mc').val();
+			choices1 = $('#a_mc0').val();
+			choices2 = $('#a_mc1').val();
+			choices3 = $('#a_mc2').val();
+			choices4 = $('#a_mc3').val();
 	}
-    else {
-		showError('Unable to communicate with server.');
+	else if(q_type = 3){
+			q_ans = $('#a_c-tf').val();
 	}
+console.log("choices1",choices1);
+	$.ajax({
+			url: '/manage/question/add',
+			type: 'POST', //type is any HTTP method
+			data: {
+					q_id, q_name, q_type, choices1,choices2, choices3, choices4, q_ans
+			}, //Data as js object
+			success: function () {
+					window.location.reload(true);
+			}
+	});
 }
-/* load document messages */
+
+function DeleteQuestion() {
+	var q_id = $('#q_id').val();
+
+	$.ajax({
+			url: '/question/delete/' + q_id,
+			type: 'DELETE', //type is any HTTP method
+			data: {
+					q_id
+			}, //Data as js object
+			success: function () {
+					window.location.reload(true);
+			}
+	});
+}

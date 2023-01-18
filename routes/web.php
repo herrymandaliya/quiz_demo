@@ -41,10 +41,14 @@ Route::group(['namespace' => 'Manage'], function() {
             Route::get('/quiz',                                         'QuizController@index');
             // Route::post('/quiz/load',                                'QuizController@load');
             Route::get('/quiz/create',                                  'QuizController@create');
-            // Route::get('/quiz/edit/{id}',                            'QuizController@edit');
+            Route::get('/quiz/edit/{id}',                               'QuizController@edit');
+            Route::put('/question/edit/{id}',                           'QuizController@update');
+            Route::post('/question/add',                                'QuizController@addQuestion');
+            Route::delete('/question/delete/{id}',                      'QuizController@deleteQuestion');
             // Route::get('/quiz/view/{id}',                            'QuizController@view');
-            Route::post('/quiz/store',                               'QuizController@store');
+            Route::post('/quiz/store',                                  'QuizController@store');
             // Route::post('/quiz/destroy',                             'QuizController@destroy');
+
 
 
             /* USERS PAGES ROUTES */

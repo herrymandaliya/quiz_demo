@@ -25,7 +25,7 @@
     </div>
     <div class="card-body">
         <div class="container">
-            <h2>Create Quiz Event</h2>
+            <h2>Create Quiz</h2>
                 {!! Form::open(['url' => url_admin('quiz/store'),  'class' => '']) !!}
                 {{ csrf_field() }}
                 <div class="col-6">
