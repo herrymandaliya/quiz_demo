@@ -35,7 +35,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- {{dd($q->question)}} --}}
                             @foreach($q->question as $qe)
                                 <tr>
                                     <td>{{ $qe->questionnaire_name }}</td>
@@ -47,16 +46,11 @@
                                     </td>
                                     <td>
                                         <span>{{$qe->choices1}} </span><br>
-                                        <span>{{$qe->choices2}} </span> <br>
+                                        <span>{{$qe->choices2}} </span><br>
                                         <span>{{$qe->choices3}} </span><br> 
-                                        <span>{{$qe->choices4}}</span> 
-                                       @php
-                                            //$a = explode(';', $qe->choices1);
-                                            //foreach ($a as $ch){ echo $ch . '<br>'; }
-                                        @endphp
+                                        <span>{{$qe->choices4}}</span>
                                     </td>
                                     <td>
-                                        {{-- {{dd($qe->choices4)}} --}}
                                         @if($qe->questionnaire_type == 2)
                                             <button class="btn btn-primary btn-sm" data-qid="{{ $qe->questionnaire_id }}" data-question="{{ $qe->questionnaire_name }}" data-question-type="{{ $qe->questionnaire_type }}"
                                                 data-choices1="{{ $qe->choices1 }}" data-choices2="{{ $qe->choices2 }}" data-choices3="{{ $qe->choices3 }}" data-choices4="{{ $qe->choices4 }}" data-correct-ans="{{ $qe->answer }}" 
@@ -68,7 +62,7 @@
                                                 data-target="#editQuestion">Edit
                                             </button>
                                         @endif
-                                        <button class="btn btn-primary btn-sm btn-danger" data-qid="{{ $qe->question_id }}" data-toggle="modal" data-target="#deleteQuestion">Delete
+                                        <button class="btn btn-primary btn-sm btn-danger" data-qid="{{ $qe->questionnaire_id }}" data-toggle="modal" data-target="#deleteQuestion">Delete
                                         </button>
                                     </td>
                                 </tr>

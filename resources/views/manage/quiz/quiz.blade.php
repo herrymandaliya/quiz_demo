@@ -34,7 +34,7 @@
                         <input name="q_name" type="text" class="form-control" required autofocus>
                     </div>
                     <div class="form-group">
-                        <label for="">Quiz Expiry</label>
+                        <label for="">Quiz Date</label>
                         <input name="exam_date" type="text" id="exam_date" class="form-control" required autofocus>
                     </div>
                     {{--<div class="form-group">

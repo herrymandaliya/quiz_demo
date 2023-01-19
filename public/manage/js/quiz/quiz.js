@@ -100,6 +100,6 @@ function addQuestion(){
 $(document).ready(function() {
           
 	$(function() {
-			$( "#exam_date" ).datepicker();
+			$( "#exam_date" ).datepicker({ minDate: 0});
 	});
 })

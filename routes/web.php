@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Manage'], function() {
             // Route::post('/quiz/load',                                'QuizController@load');
             Route::get('/quiz/create',                                  'QuizController@create');
             Route::get('/quiz/edit/{id}',                               'QuizController@edit');
+            Route::get('/quiz/delete/{id}',                             'QuizController@delete');
             Route::put('/question/edit/{id}',                           'QuizController@update');
             Route::post('/question/add',                                'QuizController@addQuestion');
             Route::delete('/question/delete/{id}',                      'QuizController@deleteQuestion');

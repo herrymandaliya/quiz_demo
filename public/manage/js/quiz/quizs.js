@@ -2,7 +2,7 @@ var searchVal = '';
 var page = 1;
 
 $(document).ready(function() {
-	loadData(page, searchVal);
+	// loadData(page, searchVal);
 	$('#searchform').validate();
 });
 
@@ -10,11 +10,11 @@ function submitHandler(form) {
 	disableFormButton(form);
 	showLoader();
 	searchVal = $('#searchtextbox').val();
-	loadData(page, searchVal);
+	// loadData(page, searchVal);
 }
 
 // function loadData(page, search) {
-//     showLoader();
+//     showL  oader();
 //     ajaxFetch(baseurl() + '/projects/load', { page: page, search: search }, formResponse);
 // }
 
@@ -37,7 +37,7 @@ function formResponse(responseText, statusText) {
 				var arr = $(this).attr('href').split('page=');
 				page = parseInt(arr[arr.length-1]);
 				if(isNaN(page)) { page = 1; }
-				loadData(page, searchVal);
+				// loadData(page, searchVal);
 			});
 		}
 		else {
@@ -60,7 +60,7 @@ function deleteEntity(user_id) {
 				if(statusText == 'success') {
 					if(responseText.type == 'success') {
 						showSuccess(responseText.caption, '', function(){
-							loadData(1, searchVal);
+							// loadData(1, searchVal);
 				        });
 				    }
 				    else {

@@ -13,7 +13,7 @@
                 </ul>
             </div>
             <div class="col-auto float-right ml-auto">
-                <a href="{{ url_admin('quiz/create') }}" class="btn add-btn"><i class="fa fa-plus"></i> Add Project</a>
+                <a href="{{ url_admin('quiz/create') }}" class="btn add-btn"><i class="fa fa-plus"></i> Add Quiz</a>
             </div>
             
         </div>
@@ -36,7 +36,7 @@
                         <tr>
                             <td >{{$quizs->quizzes_name}}</td>
                             <td>{{$quizs->exam_date}}</td>    
-                            <td ><a class="edit" href="{{url_admin('quiz/edit/' .$quizs->quizze_id)}}"><i class="fa fa-edit"></i></a><a class="remove" onclick="return confirm('Are you sure delete this item?')" href="#"><i class="fa fa-trash"></i></a></td>
+                            <td ><a class="edit" href="{{url_admin('quiz/edit/' .$quizs->quizze_id)}}"><i class="fa fa-edit"></i></a><a class="remove" onclick="return confirm('Are you sure delete this item?')" href="{{url_admin('quiz/delete/' .$quizs->quizze_id)}}"><i class="fa fa-trash"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -24,6 +24,7 @@
                         <input type="submit" name="submit" id="submit" class="form-submit" value="Login">
                      </div>
                      {!! Form::close() !!}
+                     <div class="float-right"><span>You don't have account?</span><a href="{{url('/register')}}">register</a></div>
                </div>
             </div>
          </section>

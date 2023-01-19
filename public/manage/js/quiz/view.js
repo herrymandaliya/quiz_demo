@@ -152,9 +152,8 @@ console.log("choices1",choices1);
 
 function DeleteQuestion() {
 	var q_id = $('#q_id').val();
-
 	$.ajax({
-			url: '/question/delete/' + q_id,
+			url: '/manage/question/delete/' + q_id,
 			type: 'DELETE', //type is any HTTP method
 			data: {
 					q_id

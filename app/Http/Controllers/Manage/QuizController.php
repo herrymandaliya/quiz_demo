@@ -45,13 +45,12 @@ class QuizController extends AdminbaseController
 
         // $p = $request->input('points'); //Question point
 
-        Quiz::create([
+     $quiz=  Quiz::create([
             'quizzes_name' => $quiz_name,
             'exam_date'=>$exam_date,
         ]);
 
-        $q_id = Quiz::count(); //Questionnaire id.
-
+        $q_id = $quiz->quizze_id; //Questionnaire id.
         for($x = 0; $x < count($questions); $x++){
             $question = $questions[$x];
             $choices1 = ""; //For multiple choice use.
@@ -99,6 +98,12 @@ class QuizController extends AdminbaseController
 
         return redirect('/manage/quiz');
     }
+    public function delete(Request $request, $id){
+       
+        Quiz::destroy($id);
+        Questionnaire::where('quizze_id',$id)->delete();
+        return redirect('/manage/quiz');
+    }
 
     public function edit($id){
 
@@ -136,9 +141,10 @@ class QuizController extends AdminbaseController
         $question->save();
     }
 
-    public function deleteQuestion(Request $request){
+    public function deleteQuestion(Request $request, $id){
         Questionnaire::destroy($id);
     }
+   
 
     
 
